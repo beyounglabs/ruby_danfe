@@ -12,6 +12,31 @@ module RubyDanfe
 
       @document = Prawn::Document.new(default_opts.merge(opts))
 
+      # SCALE FIX START
+      page_width = bounds.width
+      page_height = bounds.height
+
+      page_x_center = page_width / 2
+      page_y_center = page_height / 2
+
+      scale_factor = 0.90
+
+      save_graphics_state
+
+      scale scale_factor
+
+      page_scaled_width = page_width * scale_factor;
+      page_scaled_height = page_height * scale_factor;
+
+      page_scaled_x_center = page_scaled_width / 2
+      page_scaled_y_center = page_scaled_height / 2
+
+      x = page_x_center - page_scaled_x_center
+      y = page_y_center - page_scaled_y_center
+
+      translate(x, y)
+      # SCALE FIX END
+
       @document.font "Times-Roman"
     end
 
